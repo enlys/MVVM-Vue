@@ -28,6 +28,16 @@ LIFECYCLE_HOOKS.forEach((hook) => {
   };
 });
 
+starts.components = function(parentVal, childVal) {
+  const res = Object.create(parentVal);
+  if (childVal) {
+    for(let key in childVal) {
+      res[key] = childVal[key]; // 优先使用自己的
+    }
+  }
+  return res;
+}
+
 export function mergeOptions(parent, child) {
   const options = {};
   for (let key in parent) {

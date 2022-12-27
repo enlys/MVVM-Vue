@@ -8,8 +8,15 @@ export function initLifecycle(Vue) {
   Vue.prototype._update = function(vnode) {
     const vm = this;
     const el = vm.$el;
+    const preVnode = vm._vnode;
+    vm._vnode = vnode;
     // patch初始化功能和更新
-    vm.$el = patch(el, vnode);
+    if (preVnode) {
+      vm.$el = patch(preVnode, vnode);
+    } else {
+      vm.$el = patch(el, vnode);
+    }
+    
   }
   Vue.prototype._c = function() {
     return createElementVNode(this, ...arguments);

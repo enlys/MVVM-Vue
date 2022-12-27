@@ -24,9 +24,7 @@ export function initMixin(Vue) {
       if (!opts.template && el) {
         template = el.outerHTML;
       } else {
-        if (el) {
-          template = opts.template;
-        }
+        template = opts.template;
       }
       if (template) {
         // 编译模板

@@ -1,4 +1,8 @@
 // h() _c()
+function isReserveTag = (tag) => {
+  return ['a', 'div', 'ul', 'span', 'p', 'li'].includes(tag);
+}
+
 export function createElementVNode(vm, tag, data = {}, ...children){
   if (data == null) {
     data = {}
@@ -7,22 +11,43 @@ export function createElementVNode(vm, tag, data = {}, ...children){
   if (key) {
     delete data.key;
   }
-  return vnode(vm, tag, key, data, children);
+  if (isReserveTag(tag)) {
+    return vnode(vm, tag, key, data, children);
+  } else {
+    let Ctor = vm.options.components[tag]; // 组件的构造函数
+    // ctor 可能为Sub类也可能为组件选项options
+    return createComponentVnode(vm, tag, key, data, children, Ctor);
+  }
 }
+
+function createComponentVnode(vm, tag, key, data, children, Ctor) {
+  if (typeof Ctor === 'object') {
+    Ctor = vm.$options._base.extent(Ctor);
+  }
+  data.hook = {
+    init(vnode) { // 创造真实节点调用
+     let instance = vnode.componentInstance = new vnode.componentOptions.Ctor;
+     instance.$mount();
+    }
+  };
+  return vnode(vm, tag, key, data, children, null, {Ctor});
+}
+
 // _v()
 export function createTextVNode(vm, text) {
   return vnode(vm, undefined, undefined, undefined, undefined, text);
 }
 
 
-function vnode(vm, tag, key, data, children, text){
+function vnode(vm, tag, key, data, children, text, componentOptions){
   return {
     vm,
     tag,
     key,
     data,
     children,
-    text
+    text,
+    componentOptions
   }
 } 
 
