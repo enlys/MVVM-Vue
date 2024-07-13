@@ -136,7 +136,7 @@ function updateChildren(el, oldChildren, newChildren) {
   function makeIndexByKey(children) {
     let map = {};
     children.forEach((child, index) => {
-      map[key] = index;
+      map[child] = index;
     });
     return map;
   }

@@ -1,5 +1,5 @@
 // h() _c()
-function isReserveTag = (tag) => {
+const isReserveTag = (tag) => {
   return ['a', 'div', 'ul', 'span', 'p', 'li'].includes(tag);
 }
 

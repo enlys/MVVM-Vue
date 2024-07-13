@@ -18,9 +18,9 @@ class Watcher {
     
     this.deps = []; //实现计算属性及清理工作
     this.depsId = new Set();
-    this.lazy = options.lazy;
+    this.lazy = options.lazy; //标识是否为计算属性
     this.cb = cb;
-    this.dirty = this.lazy; // 缓存值
+    this.dirty = this.lazy; // 缓存值 取值的时候标识是否执行
     this.vm = vm;
     this.user = options.user;
     this.value = this.lazy ? undefined : this.get();

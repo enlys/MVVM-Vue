@@ -71,5 +71,6 @@ export function compileToFunction(template) {
   console.log(code);
   code = `with(this){return ${code}}`;
   let render = new Function(code); // 根据代码生成render函数
+  console.log('render:', render);
   return render;
 } 

@@ -45,7 +45,7 @@ export function defineReactive(target, key, value) {
         dep.depend(); //收集watcher
         if (childOb)  {
           childOb.dep.depend(); // 数组和对象本身也收集依赖
-          if (Array,isArray(value)) {
+          if (Array.isArray(value)) {
             dependArray(value);
           }
         }

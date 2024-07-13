@@ -50,7 +50,7 @@ export function mergeOptions(parent, child) {
   }
   function mergeField(key) {
     if (starts[key]) {
-      options[key] = starts[hook](parent[key], child[key]);
+      options[key] = starts[key](parent[key], child[key]);
     } else {
       options[key] = child[key] || parent[key]; // 优先采用儿子的，再采用父亲的
     }

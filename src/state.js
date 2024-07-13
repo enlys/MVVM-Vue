@@ -68,8 +68,8 @@ function defineComputed(target, key, userDef) {
 function createComputedGetter(key) {
   return function () {
     const watcher = this._computedWatcher[key]; //获取计算属性的watcher
-    if (watcher.dirty) {
-      watcher.get();
+    if (watcher.dirty) {  // dirty为真标识需要重新执行用户传递的方法
+      watcher.evaluate();
     }
     if (Dep.target) {
       // 计算属性出栈后，还要渲染watcher,让计算属性watcher里的属性继续收集上层watcher
